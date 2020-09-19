@@ -64,7 +64,6 @@ embed = function(message, embed) {
     }
 
     var finishedEmbed = new Discord.MessageEmbed(embed);
-
     return message.channel.send(finishedEmbed)
 }
 

@@ -34,6 +34,8 @@ module.exports = function(client) {
                             var textWithoutCommand = text.split(" ").slice(1).join(" ");
                             client.progbot.commands[key].call(message, textWithoutCommand, client);
                             message.delete();
+
+                            return;
                         }
                     })
                 } else {
@@ -41,6 +43,8 @@ module.exports = function(client) {
                         var textWithoutCommand = text.split(" ").slice(1).join(" ");
                         client.progbot.commands[key].call(message, textWithoutCommand, client);
                         message.delete();
+
+                        return;
                     }
                 }
             })		
@@ -54,12 +58,16 @@ module.exports = function(client) {
                         if (cmd == val) {
                             var textWithoutCommand = text.split(" ").slice(1).join(" ");
                             client.progbot.commands[key].call(message, textWithoutCommand, client);
+
+                            return;
                         }
                     })
                 } else {
                     if (cmd == cmds[key].cmd) {
                         var textWithoutCommand = text.split(" ").slice(1).join(" ");
                         client.progbot.commands[key].call(message, textWithoutCommand, client);
+
+                        return;
                     }
                 }
             })
