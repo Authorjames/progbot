@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const mlib = require("./../modules/mlib.js");
+const vm = require("vm");
 
 module.exports = {
     name: "JavaScript",
@@ -7,27 +8,55 @@ module.exports = {
     category: "Utility",
     description: "For running code in Discord",
     call: function(message, text, client) {
-        try {
-            bot = client.user;
-            author = message.author;
-            channel = message.channel;
+        if (!message.author.selfStorage) {
+            message.author.selfStorage = {};
+        }
 
-            function reply(text) {
-                message.channel.send(text);
-            }
+        try {
+            var context = {
+                bot: client.user,
+                author: message.author,
+                channel: message.channel,
+                message: message,
+                text: text,
+                client: client,
+                mlib: mlib,
+                discord: Discord,
+                me: message.author.selfStorage,
+            };
+
+            vm.createContext(context);
             
-            var multiline = /```js([\s\S]*)```/g
+            var multiline = /```(js)?(?<js>[\s\S]*)```/g
             if (text.match(multiline)) {
                 text = multiline.exec(text)
 
-                if (text[1]) {
-                    text = text[1];
+                if (text.groups.js) {
+                    text = text.groups.js;
                 }
             }
 
-            var res = eval(text);
+            var script = new vm.Script(text);
+
+            var res = script.runInContext(context, {
+                timeout: 2000,
+            })
+
             if ((res != undefined) && (res != "[object Promise]")) {
-               mlib.success(message, res.toString());
+                if (typeof res == "object") {
+                    var jsonRes = JSON.stringify(res, null, 4);
+                    if (jsonRes.length > 5900) {
+                        mlib.notify(message, "Object stringified exceeds max message length!");
+
+                        return;
+                    }
+
+                    mlib.success(message, jsonRes);
+
+                    return;
+                }
+
+                mlib.success(message, res.toString());
             }
         } catch(err) {
             var embed = new Discord.MessageEmbed({
