@@ -12,11 +12,13 @@ module.exports = {
             "Crusader Kings": "756574304975454350",
             "League of Legends": "756574197982953492",
         }
+        
+        let gameNames = Object.keys(gameRoles);
 
         if (text.length <= 0) {
             mlib.embed(message, {
                 title: "All the game roles",
-                description: "Among Us",
+                description: gameNames.join("\n"),
                 footer: {
                     text: "?gamerole <game>"
                 }
