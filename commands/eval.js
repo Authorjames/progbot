@@ -13,17 +13,26 @@ module.exports = {
         }
 
         try {
-            var context = {
-                bot: client.user,
-                author: message.author,
-                channel: message.channel,
-                message: message,
-                text: text,
-                client: client,
-                mlib: mlib,
-                discord: Discord,
-                me: message.author.selfStorage,
-            };
+            var context;
+            if (message.author.id === "87570671516794880") {
+                context = {
+                    bot: client.user,
+                    author: message.author,
+                    channel: message.channel,
+                    message: message,
+                    text: text,
+                    client: client,
+                    mlib: mlib,
+                    discord: Discord,
+                    me: message.author.selfStorage,
+                };
+            } else {
+                context = {
+                    me: message.author.selfStorage,
+                    mlib: mlib,
+                    text: text,
+                }
+            }
 
             vm.createContext(context);
             
@@ -56,7 +65,14 @@ module.exports = {
                     return;
                 }
 
-                mlib.success(message, res.toString());
+                res = res.toString();
+                if (res.length > 2000) {
+                    mlib.error(message, "Output exceeds limit of 2000");
+
+                    return;
+                }
+
+                mlib.success(message, res);
             }
         } catch(err) {
             var embed = new Discord.MessageEmbed({
