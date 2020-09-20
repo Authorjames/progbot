@@ -9,6 +9,8 @@ module.exports = {
     call: function (message, text, client) {
         let gameRoles = {
             "Among Us": "756574062762786979",
+            "Crusader Kings": "756574304975454350",
+            "League of Legends": "756574197982953492",
         }
 
         if (text.length <= 0) {
