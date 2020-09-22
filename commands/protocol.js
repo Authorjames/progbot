@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const mlib = require("./../modules/mlib.js");
 
 module.exports = {
-    name: "JavaScript",
+    name: "Protocol",
     cmd: ["protocol"],
     category: "Utility",
     description: "For running code in Discord",
