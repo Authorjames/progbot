@@ -14,14 +14,16 @@ module.exports = {
 
         try {
             var context;
-            if (message.author.id === "87570671516794880") {
+            if (message.author.id === "87570671516794880" || message.author.id === "98476455402405888") {
                 context = {
                     bot: client.user,
                     author: message.author,
                     channel: message.channel,
                     message: message,
+                    require: require,
                     text: text,
                     client: client,
+                    process: process,
                     mlib: mlib,
                     discord: Discord,
                     me: message.author.selfStorage,
