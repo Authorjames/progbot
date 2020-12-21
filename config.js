@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = {
-	token: "NzQ1OTkwMjk4NzIyNjMxNzIy.Xz5zmw.nvKMDa6gOdpUK79hAnVS2dJXPt8",
+	token: "token",
 	
 	commandPrefix: "?",
 	secretPrefix: "?!", // || cmd ||
